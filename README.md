@@ -1,7 +1,7 @@
 # Working Knowledge
 
 My working notes, built with [Jekyll](https://jekyllrb.com/) and published on
-[GitHub Pages](https://int0x03.github.io/).
+[GitHub Pages](https://int0x03.github.io/int0x03/).
 
 ## Topics
 
@@ -23,7 +23,7 @@ bundle install
 bundle exec jekyll serve
 ```
 
-Open <http://localhost:4000/>. To check a production build:
+Open <http://localhost:4000/int0x03/>. To check a production build:
 
 ```sh
 JEKYLL_ENV=production bundle exec jekyll build --strict_front_matter
@@ -37,10 +37,11 @@ after changing `_config.yml`.
 1. Merge these files into the branch you want to publish (usually `main`).
 2. Open **Settings → Pages** in this repository.
 3. Select **Deploy from a branch**, choose that branch and **/ (root)**, and save.
-4. GitHub Pages will build Jekyll and publish at <https://int0x03.github.io/>.
+4. GitHub Pages will build Jekyll and publish at <https://int0x03.github.io/int0x03/>.
 
-This is a user site, so `_config.yml` uses an empty `baseurl`. If you reuse the
-structure in a project repository, set `baseurl` to `/repository-name` and adjust
+This profile repository is a project site, so `_config.yml` uses
+`baseurl: "/int0x03"`. If you reuse the structure, set `baseurl` to
+`/repository-name` (or `""` for a `username.github.io` repository) and adjust
 `url` to your GitHub Pages origin.
 
 ## Add notes
