@@ -1,0 +1,51 @@
+home:
+  title: Home
+  url: /
+
+sections:
+  - title: Time Series Anomaly Detection
+    url: /time-series-anomaly-detection/
+    children:
+      - title: English
+        children:
+          - title: "Lesson 1: What Counts as an Anomaly?"
+            url: /time-series-anomaly-detection/lessons/01-what-is-an-anomaly/
+          - title: "Lesson 2: Build a Trustworthy Timeline"
+            url: /time-series-anomaly-detection/lessons/02-prepare-time-series-data/
+          - title: "Lesson 3: Build the First Statistical Baseline"
+            url: /time-series-anomaly-detection/lessons/03-statistical-baselines/
+          - title: "Lesson 4: Handle Seasonality and Persistent Change"
+            url: /time-series-anomaly-detection/lessons/04-seasonality-and-change/
+          - title: "Lesson 5: Turn Windows into Machine-Learning Features"
+            url: /time-series-anomaly-detection/lessons/05-classical-machine-learning/
+          - title: "Lesson 6: Understand Deep Time-Series Models"
+            url: /time-series-anomaly-detection/lessons/06-deep-time-series-models/
+          - title: "Lesson 7: Choose Thresholds and Evaluate Events"
+            url: /time-series-anomaly-detection/lessons/07-thresholds-and-evaluation/
+          - title: "Lesson 8: Put the Detector into Production"
+            url: /time-series-anomaly-detection/lessons/08-production-and-llms/
+      - title: 中文
+        url: /time-series-anomaly-detection/zh-cn/
+        children:
+          - title: 第 1 课：到底什么是异常？
+            url: /time-series-anomaly-detection/zh-cn/lessons/01-what-is-an-anomaly/
+          - title: 第 2 课：建立可信的时间线
+            url: /time-series-anomaly-detection/zh-cn/lessons/02-prepare-time-series-data/
+          - title: 第 3 课：建立第一个统计基线
+            url: /time-series-anomaly-detection/zh-cn/lessons/03-statistical-baselines/
+          - title: 第 4 课：处理季节性与持续变化
+            url: /time-series-anomaly-detection/zh-cn/lessons/04-seasonality-and-change/
+          - title: 第 5 课：把滑动窗口变成机器学习特征
+            url: /time-series-anomaly-detection/zh-cn/lessons/05-classical-machine-learning/
+          - title: 第 6 课：理解深度时序模型
+            url: /time-series-anomaly-detection/zh-cn/lessons/06-deep-time-series-models/
+          - title: 第 7 课：选择阈值并评估事件
+            url: /time-series-anomaly-detection/zh-cn/lessons/07-thresholds-and-evaluation/
+          - title: 第 8 课：让检测器走进生产环境
+            url: /time-series-anomaly-detection/zh-cn/lessons/08-production-and-llms/
+  - title: LLMs
+    url: /llm/
+  - title: scikit-learn
+    url: /sklearn/
+  - title: LeetCode
+    url: /leetcode/

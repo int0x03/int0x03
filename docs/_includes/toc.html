@@ -1,0 +1,56 @@
+<nav class="toc" id="table-of-contents" aria-labelledby="toc-title" hidden>
+  <h2 class="toc-title" id="toc-title">{% if page.lang == "zh-CN" %}本页目录{% else %}On this page{% endif %}</h2>
+  <ol class="toc-list" id="toc-list"></ol>
+</nav>
+
+<script>
+  (function () {
+    var content = document.getElementById("document-content");
+    var toc = document.getElementById("table-of-contents");
+    var list = document.getElementById("toc-list");
+    if (!content || !toc || !list) return;
+
+    var headings = Array.prototype.slice.call(content.querySelectorAll("h2, h3"));
+    if (!headings.length) {
+      var aside = toc.closest(".docs-toc");
+      if (aside) aside.hidden = true;
+      return;
+    }
+
+    var links = headings.map(function (heading, index) {
+      if (!heading.id) heading.id = "section-" + (index + 1);
+
+      var item = document.createElement("li");
+      item.className = "toc-item toc-" + heading.tagName.toLowerCase();
+
+      var link = document.createElement("a");
+      link.className = "toc-link";
+      link.href = "#" + heading.id;
+      link.textContent = heading.textContent.trim();
+      item.appendChild(link);
+      list.appendChild(item);
+      return link;
+    });
+
+    toc.hidden = false;
+
+    if ("IntersectionObserver" in window) {
+      var visibleHeadings = [];
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          var position = visibleHeadings.indexOf(entry.target);
+          if (entry.isIntersecting && position === -1) visibleHeadings.push(entry.target);
+          if (!entry.isIntersecting && position !== -1) visibleHeadings.splice(position, 1);
+        });
+        visibleHeadings.sort(function (a, b) {
+          return headings.indexOf(a) - headings.indexOf(b);
+        });
+        links.forEach(function (link) { link.classList.remove("is-active"); });
+        var active = visibleHeadings[0];
+        if (active) links[headings.indexOf(active)].classList.add("is-active");
+      }, { rootMargin: "-15% 0px -70% 0px" });
+
+      headings.forEach(function (heading) { observer.observe(heading); });
+    }
+  }());
+</script>
