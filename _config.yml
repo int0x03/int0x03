@@ -1,0 +1,23 @@
+title: Working Knowledge
+description: Notes on time series anomaly detection, LLMs, scikit-learn, and LeetCode.
+url: "https://int0x03.github.io"
+baseurl: ""
+theme: minima
+markdown: kramdown
+
+header_pages:
+  - time-series-anomaly-detection/README.md
+  - llm/README.md
+  - sklearn/README.md
+  - leetcode/README.md
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: page
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
