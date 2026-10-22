@@ -47,7 +47,31 @@ This profile repository is a project site, so `docs/_config.yml` uses
 `/repository-name` (or `""` for a `username.github.io` repository) and adjust
 `url` to your GitHub Pages origin.
 
-## Write equations
+## Documentation conventions
+
+These conventions apply to every document under `docs/` and are mirrored in
+`.github/copilot-instructions.md` for repository-local Copilot guidance.
+
+### Introduce abbreviations
+
+Expand each domain-specific abbreviation the first time it appears in a document.
+In English, write the full English term followed by the abbreviation:
+
+```text
+Median Absolute Deviation (MAD)
+```
+
+In Chinese, include the Chinese term, full English term, and abbreviation:
+
+```text
+中位数绝对偏差（Median Absolute Deviation，MAD）
+```
+
+Use only the abbreviation after it has been introduced; do not repeatedly expand
+it in the same document. When corresponding English and Chinese pages both exist,
+keep their terminology and structure synchronized.
+
+### Write equations
 
 Pages containing equations should set `layout: math-page` in their front matter.
 The layout loads MathJax only where it is needed.
