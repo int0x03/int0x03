@@ -4,6 +4,8 @@ url: "https://int0x03.github.io"
 baseurl: "/int0x03"
 theme: minima
 markdown: kramdown
+kramdown:
+  math_engine: mathjax
 
 header_pages:
   - time-series-anomaly-detection/README.md

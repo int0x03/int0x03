@@ -1,6 +1,8 @@
 ---
 title: 时序数据异常检测
 permalink: /time-series-anomaly-detection/zh-cn/
+layout: math-page
+lang: zh-CN
 ---
 
 # 时序数据异常检测
@@ -31,23 +33,23 @@ permalink: /time-series-anomaly-detection/zh-cn/
 | 方法 | 基本思路 | 说明 |
 | --- | --- | --- |
 | Z-score | 标记距离均值超过若干个标准差的观测值。 | 适合近似平稳、轻尾分布的数据；当基线变化时，应使用滚动统计量或季节性统计量。 |
-| Modified Z-score / MAD | 使用中位数绝对偏差，将观测值与中位数进行比较。 | 当历史数据中已经存在离群值时，它比均值和标准差更稳健。 |
-| IQR 或分位数规则 | 标记落在稳健分位数边界之外的观测值。 | 简单且不依赖具体分布，但本身不会建模时间顺序。 |
-| EWMA / CUSUM / 控制图 | 累积相对于受控基线的微小偏差。 | 适合检测受监控过程中的持续性水平偏移。 |
+| Modified Z-score / 中位数绝对偏差（Median Absolute Deviation，MAD） | 使用中位数绝对偏差，将观测值与中位数进行比较。 | 当历史数据中已经存在离群值时，它比均值和标准差更稳健。 |
+| 四分位距（Interquartile Range，IQR）或分位数规则 | 标记落在稳健分位数边界之外的观测值。 | 简单且不依赖具体分布，但本身不会建模时间顺序。 |
+| 指数加权移动平均（Exponentially Weighted Moving Average，EWMA）/ 累积和（Cumulative Sum，CUSUM）/ 控制图 | 累积相对于受控基线的微小偏差。 | 适合检测受监控过程中的持续性水平偏移。 |
 | 季节分解 | 移除趋势和季节性，再对残差评分。 | 适合需要在相同季节上下文中比较观测值的场景。 |
-| 预测区间 | 拟合统计预测模型，并标记超出预测区间的观测值。 | 例如指数平滑和 ARIMA 系列模型。 |
+| 预测区间 | 拟合统计预测模型，并标记超出预测区间的观测值。 | 例如指数平滑和自回归积分滑动平均（Autoregressive Integrated Moving Average，ARIMA）模型。 |
 
-对于观测值 \(x_t\)，普通 Z-score 使用均值和标准差：
+对于观测值 $$x_t$$，普通 Z-score 使用均值和标准差：
 
-\[
+$$
 z_t = \frac{x_t - \mu}{\sigma}
-\]
+$$
 
 一种常见的稳健替代方案使用中位数和 MAD：
 
-\[
+$$
 \operatorname{MAD} = \operatorname{median}(|x_t - \operatorname{median}(x)|)
-\]
+$$
 
 `abs(z) > 3` 之类的阈值只是经验规则，并非通用常数。应在具有代表性的验证数据上估计阈值，并明确方差或 MAD 为零时的处理方式。
 
@@ -61,10 +63,10 @@ z_t = \frac{x_t - \mu}{\sigma}
 | --- | --- |
 | Isolation Forest | 对表格特征或窗口特征进行无监督评分；扩展性较好，对数据分布的假设较少。 |
 | Local Outlier Factor（LOF） | 查找相对于邻居具有异常低密度的样本。对未来数据进行评分时应使用 novelty 模式。 |
-| One-Class SVM | 学习一个包围大部分正常训练样本的边界；对特征缩放和超参数比较敏感。 |
+| 单类支持向量机（One-Class Support Vector Machine，SVM） | 学习一个包围大部分正常训练样本的边界；对特征缩放和超参数比较敏感。 |
 | Elliptic Envelope | 拟合稳健的高斯协方差；只适合高斯椭球形状假设合理的情况。 |
 | 聚类或最近邻距离 | 将小型聚类或远离正常聚类的样本视为可疑对象。 |
-| PCA 重构误差 | 标记无法由低维正常子空间良好表示的窗口。 |
+| 主成分分析（Principal Component Analysis，PCA）重构误差 | 标记无法由低维正常子空间良好表示的窗口。 |
 | 监督分类器 | 当存在足够可靠的标签时，直接预测异常。 |
 
 scikit-learn 是通用机器学习工具箱，本身并不是时序异常检测器。特征构建和训练/测试集划分必须保持时间顺序：缩放器、窗口生成过程和模型都只能使用过去的数据进行拟合，以避免数据泄漏。
@@ -75,16 +77,16 @@ scikit-learn 是通用机器学习工具箱，本身并不是时序异常检测�
 
 | 机制 | 基本思路 | 代表性模型 |
 | --- | --- | --- |
-| 基于预测（Forecasting-based） | 预测下一个值或窗口，并对预测残差或似然进行评分。 | 状态空间模型、RNN/LSTM/TCN、Transformer 预测模型。 |
+| 基于预测（Forecasting-based） | 预测下一个值或窗口，并对预测残差或似然进行评分。 | 状态空间模型、循环神经网络（Recurrent Neural Network，RNN）、长短期记忆网络（Long Short-Term Memory，LSTM）、时序卷积网络（Temporal Convolutional Network，TCN）、Transformer 预测模型。 |
 | 基于重构（Reconstruction-based） | 重构正常输入窗口，并对重构误差进行评分。 | PCA、自编码器、变分自编码器、序列自编码器。 |
 | 密度或概率方法 | 估计观测值或序列在所学习的正常过程下出现的可能性。 | 高斯过程、隐马尔可夫/状态空间模型、归一化流。 |
 | 表示学习或图方法 | 在异常状态评分之前，学习时间关系和变量之间的关系。 | 对比学习模型、时序 Transformer、图神经网络。 |
 
-[PyPOTS](https://github.com/WenjieDu/PyPOTS) 应归入这一部分，但它是一个**工具箱**，而不是某一种异常检测算法。它为部分观测数据上的多种神经时序模型和任务提供统一接口，其中包括异常检测和缺失值处理。具体的 PyPOTS 模型仍应被描述为基于预测、基于重构或基于表示学习的模型，而不能简单归类为“基于 PyPOTS”。
+[PyPOTS](https://github.com/WenjieDu/PyPOTS)（Python Toolbox for Data Mining on Partially-Observed Time Series）应归入这一部分，但它是一个**工具箱**，而不是某一种异常检测算法。它为部分观测数据上的多种神经时序模型和任务提供统一接口，其中包括异常检测和缺失值处理。具体的 PyPOTS 模型仍应被描述为基于预测、基于重构或基于表示学习的模型，而不能简单归类为“基于 PyPOTS”。
 
 当时间依赖关系、多个相关变量、缺失观测或大规模数据使简单假设过于受限时，深度模型更有价值。不过，它们也需要更加谨慎的调参、校准和监控。
 
-### 4. 基础模型与 LLM 辅助方法
+### 4. 基础模型与大语言模型（Large Language Model，LLM）辅助方法
 
 这是一个仍在发展的类别，应区分为两个不同方向：
 
