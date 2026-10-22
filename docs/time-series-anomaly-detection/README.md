@@ -7,6 +7,8 @@ permalink: /time-series-anomaly-detection/
 
 Notes on finding unusual observations and patterns in time-dependent data.
 
+[简体中文]({{ '/time-series-anomaly-detection/zh-cn/' | relative_url }})
+
 There is no single, mutually exclusive taxonomy for time-series anomaly detection.
 A method can be statistical, unsupervised, and forecasting-based at the same time.
 It is useful to classify a problem along several dimensions: what constitutes an
