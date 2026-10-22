@@ -4,174 +4,73 @@ permalink: /time-series-anomaly-detection/
 layout: math-page
 ---
 
-# Time Series Anomaly Detection
+# Time Series Anomaly Detection: A Beginner's Course
 
-Notes on finding unusual observations and patterns in time-dependent data.
+Learn to find unusual behavior in time-dependent data without starting from a wall
+of algorithm names. Every lesson begins with a concrete monitoring story, adds one
+idea at a time, and ends with a small checklist.
 
 [简体中文]({{ '/time-series-anomaly-detection/zh-cn/' | relative_url }})
 
-There is no single, mutually exclusive taxonomy for time-series anomaly detection.
-A method can be statistical, unsupervised, and forecasting-based at the same time.
-It is useful to classify a problem along several dimensions: what constitutes an
-anomaly, how the detector learns, and how it produces an anomaly score.
+## The story we will follow
 
-## What is anomalous?
+Imagine a service that reports requests per minute. Most nights are quiet, every
+lunchtime is busy, deployments sometimes change the baseline, and a broken sensor
+occasionally repeats one value. “Unusual” therefore means more than “a large
+number.” This course gradually builds a detector for that service.
 
-| Type | Description | Example |
+```text
+raw readings → trustworthy timeline → baseline → anomaly score → threshold
+             → event evaluation → alert → explanation and feedback
+```
+
+## Learning path
+
+Read the lessons in order if this is your first encounter with anomaly detection.
+Lessons 1–4 form the essential statistical path; lessons 5–8 explain when and how
+to go further.
+
+| # | Lesson | Main question | You will produce |
+| --- | --- | --- | --- |
+| 1 | [What counts as an anomaly?]({{ '/time-series-anomaly-detection/lessons/01-what-is-an-anomaly/' | relative_url }}) | Is the problem a point, context, sequence, or change? | A precise anomaly definition |
+| 2 | [Build a trustworthy timeline]({{ '/time-series-anomaly-detection/lessons/02-prepare-time-series-data/' | relative_url }}) | Can the data be trusted without seeing the future? | A time-ordered data split |
+| 3 | [Build the first statistical baseline]({{ '/time-series-anomaly-detection/lessons/03-statistical-baselines/' | relative_url }}) | How far is this value from normal? | Z-score, Median Absolute Deviation (MAD), and Interquartile Range (IQR) baselines |
+| 4 | [Handle seasonality and persistent change]({{ '/time-series-anomaly-detection/lessons/04-seasonality-and-change/' | relative_url }}) | Is it unusual for *this time*, or has normal changed? | Residual and change scores |
+| 5 | [Turn windows into machine-learning features]({{ '/time-series-anomaly-detection/lessons/05-classical-machine-learning/' | relative_url }}) | Is the unusual object a multistep shape? | A leak-free feature pipeline |
+| 6 | [Understand deep time-series models]({{ '/time-series-anomaly-detection/lessons/06-deep-time-series-models/' | relative_url }}) | When do complex temporal or cross-sensor relations matter? | A model-mechanism choice |
+| 7 | [Choose thresholds and evaluate events]({{ '/time-series-anomaly-detection/lessons/07-thresholds-and-evaluation/' | relative_url }}) | Does a high score create a useful alert? | A calibrated, event-level evaluation |
+| 8 | [Put the detector into production]({{ '/time-series-anomaly-detection/lessons/08-production-and-llms/' | relative_url }}) | How does a detector stay useful after launch? | A monitored detection workflow |
+
+## Keep three questions separate
+
+An algorithm name alone never describes a complete solution:
+
+1. **What is the anomaly unit?** A point, window, event, or lasting regime change.
+2. **How is a score produced?** A rule, distance, forecast error, reconstruction
+   error, probability, or learned representation.
+3. **How is the model taught?** Rules, unsupervised data, known-normal history,
+   labeled examples, or a self-supervised task.
+
+For example, a forecasting model can be self-supervised during training, produce
+a residual score, and ultimately detect an event made of many adjacent points.
+
+## Quick starting-point map
+
+| Situation | Start here | Do not forget |
 | --- | --- | --- |
-| Point anomaly | One observation is unusual by itself. | A temperature reading of 200°C. |
-| Contextual anomaly | A value is unusual only in its temporal context. | High traffic at 03:00 that is normal at 12:00. |
-| Collective anomaly | A sequence is anomalous even if each point looks plausible. | A long flatline or an unusual oscillation. |
-| Change point | The data-generating process changes. | A persistent shift in mean, variance, or trend. |
+| Stable single metric | MAD or IQR | Handle a zero spread explicitly. |
+| Daily or weekly pattern | Seasonal residual plus MAD | Compare like times with like times. |
+| Small persistent shift | Exponentially Weighted Moving Average (EWMA) or Cumulative Sum (CUSUM) | Validate the expected detection delay. |
+| Unusual window shape | Features plus Isolation Forest or Local Outlier Factor (LOF) | Fit every transform on past data only. |
+| Correlated sensors or long dependencies | Forecasting, reconstruction, or graph model | Prove improvement over a simple baseline. |
+| Rich logs around numeric alerts | Numeric detector, then a Large Language Model (LLM) for triage | Do not use fluent text as a calibrated score. |
 
-The distinction matters: a global threshold may detect point anomalies but miss
-an unusual shape, seasonal deviation, or persistent regime change.
+## A practical rule
 
-## Main families of methods
+Start with the simplest detector that represents trend and seasonality. Add
+complexity only when a later, untouched test period shows a meaningful improvement
+in event recall, false alerts, or detection delay—not merely lower training loss.
 
-### 1. Statistical and rule-based methods
-
-These methods estimate an expected range or distribution and flag sufficiently
-large deviations. They are fast, interpretable, and strong baselines.
-
-| Method | Basic idea | Notes |
-| --- | --- | --- |
-| Z-score | Flag values several standard deviations from the mean. | Best for roughly stationary, light-tailed data; use rolling or seasonal statistics when the baseline changes. |
-| Modified Z-score / Median Absolute Deviation (MAD) | Compare values with the median using the median absolute deviation. | More robust than mean and standard deviation when the history already contains outliers. |
-| Interquartile Range (IQR) or quantile rules | Flag values outside robust quantile bounds. | Simple and distribution-free, but does not model temporal order by itself. |
-| Exponentially Weighted Moving Average (EWMA) / Cumulative Sum (CUSUM) / control charts | Accumulate small deviations from a controlled baseline. | Useful for detecting persistent level shifts in monitored processes. |
-| Seasonal decomposition | Remove trend and seasonality, then score the residual. | Useful when an observation should be compared with the same seasonal context. |
-| Forecast interval | Fit a statistical forecast and flag observations outside its prediction interval. | Examples include exponential smoothing and Autoregressive Integrated Moving Average (ARIMA) models. |
-
-For observations $$x_t$$, the ordinary Z-score uses the mean and standard
-deviation:
-
-$$
-z_t = \frac{x_t - \mu}{\sigma}
-$$
-
-A common robust alternative uses the median and MAD:
-
-$$
-\operatorname{MAD} = \operatorname{median}(|x_t - \operatorname{median}(x)|)
-$$
-
-Thresholds such as `abs(z) > 3` are heuristics, not universal constants. Estimate
-them on representative validation data, and define what to do when variance or
-MAD is zero.
-
-### 2. Classical machine learning
-
-Classical models usually receive a feature vector rather than a raw timestamped
-series. Features may include the current value, lags, rolling statistics,
-differences, seasonal residuals, frequency-domain features, or a complete sliding
-window.
-
-Common [scikit-learn outlier and novelty detectors](https://scikit-learn.org/stable/modules/outlier_detection.html)
-include:
-
-| Method | Typical use |
-| --- | --- |
-| Isolation Forest | Unsupervised scoring of tabular or window features; scales well and makes few distributional assumptions. |
-| Local Outlier Factor (LOF) | Finds samples with unusually low density relative to their neighbors. Use novelty mode when scoring future data. |
-| One-Class Support Vector Machine (SVM) | Learns a boundary around mostly normal training examples; can be sensitive to scaling and hyperparameters. |
-| Elliptic Envelope | Fits a robust Gaussian covariance; appropriate only when that shape is a reasonable assumption. |
-| Clustering or nearest-neighbor distance | Treats small clusters or samples far from normal clusters as suspicious. |
-| Principal Component Analysis (PCA) reconstruction error | Flags windows that cannot be represented well by a low-dimensional normal subspace. |
-| Supervised classifiers | Predict anomalies directly when enough reliable labels exist. |
-
-scikit-learn is a general machine-learning toolkit, not a time-series anomaly
-detector by itself. The feature-building and train/test split must preserve time:
-fit scalers, windows, and models using past data only to avoid leakage.
-
-### 3. Time-series and deep learning models
-
-Model-based detectors learn temporal or multivariate structure directly. They are
-often grouped by the mechanism used to produce a score:
-
-| Mechanism | Basic idea | Representative models |
-| --- | --- | --- |
-| Forecasting-based | Predict the next value or window and score the forecast residual or likelihood. | State-space models, Recurrent Neural Networks (RNNs), Long Short-Term Memory networks (LSTMs), Temporal Convolutional Networks (TCNs), Transformer forecasters. |
-| Reconstruction-based | Reconstruct a normal input window and score reconstruction error. | PCA, autoencoders, variational autoencoders, sequence autoencoders. |
-| Density or probabilistic | Estimate how likely an observation or sequence is under the learned normal process. | Gaussian processes, hidden Markov/state-space models, normalizing flows. |
-| Representation or graph-based | Learn temporal and cross-variable relationships before scoring unusual states. | Contrastive models, temporal Transformers, graph neural networks. |
-
-[PyPOTS](https://github.com/WenjieDu/PyPOTS) (Python Toolbox for Data Mining on
-Partially-Observed Time Series) belongs here as a **toolbox**, not as
-one anomaly-detection algorithm. It provides a common interface for multiple
-neural time-series models and tasks on partially observed data, including anomaly
-detection and handling missing values. The specific PyPOTS model still needs to
-be described as forecasting-, reconstruction-, or representation-based rather
-than simply “PyPOTS-based.”
-
-Deep models are most useful when temporal dependencies, many correlated
-variables, missing observations, or large datasets make simpler assumptions too
-restrictive. They also require more careful tuning, calibration, and monitoring.
-
-### 4. Foundation models and Large Language Model (LLM)-assisted methods
-
-This is an emerging family and should be split into two different ideas:
-
-- **Time-series foundation models** are pretrained on large collections of numeric
-  series. They can provide forecasts, prediction intervals, or embeddings; anomaly
-  scores can then come from forecast errors or distances in embedding space.
-- **General-purpose LLMs** are usually better used with contextual information such
-  as alerts, logs, maintenance records, metric names, and detector output. They can
-  help explain, correlate, or triage anomalies, but are not naturally calibrated
-  numeric anomaly detectors.
-
-Foundation models may help with transfer and cold-start problems, but they do not
-remove the need for domain-specific thresholds, time-based evaluation, latency
-checks, and false-alarm control. For many production signals, a seasonal baseline,
-MAD, or Isolation Forest remains easier to validate and operate.
-
-## Learning setup
-
-The same algorithm family can be used under different supervision assumptions:
-
-- **Rule-based:** domain experts define valid ranges, rate-of-change limits, or
-  logical constraints.
-- **Unsupervised:** training data is unlabeled and may contain some anomalies.
-- **Semi-supervised / novelty detection:** train primarily on known-normal history,
-  then detect departures from it.
-- **Supervised:** train from labeled normal and anomalous examples.
-- **Self-supervised:** learn representations using forecasting, masking, or
-  reconstruction objectives before fitting an anomaly score or classifier.
-
-## Choosing a starting point
-
-| Situation | Good starting point |
-| --- | --- |
-| One stable univariate metric | Rolling Z-score, MAD, IQR, or a control chart. |
-| Strong trend or seasonality | Decomposition plus residual scoring, or a forecast interval. |
-| Several engineered features and few labels | Isolation Forest, LOF, or One-Class SVM. |
-| Reliable anomaly labels | A supervised classifier with time-based validation. |
-| Many correlated sensors or complex sequence anomalies | A reconstruction-, forecasting-, or graph-based temporal model. |
-| Missing multivariate observations are central to the problem | A model/toolkit designed for partially observed time series, such as PyPOTS. |
-| Rich logs and operational context accompany numeric alerts | A numeric detector followed by LLM-assisted explanation or triage. |
-
-Start with the simplest method that captures the expected trend and seasonality.
-A sophisticated model should demonstrate a meaningful event-level improvement
-over statistical and classical baselines, not merely a lower training loss.
-
-## Practical workflow
-
-1. Define the anomaly unit: point, window, event, or regime change.
-2. Inspect timestamps, duplicates, missing values, sampling frequency, trend, and
-   seasonality.
-3. Create time-ordered train, validation, and test periods; never randomly mix
-   future observations into training features.
-4. Build a statistical baseline such as seasonal residuals plus MAD.
-5. Produce an anomaly score separately from the decision threshold.
-6. Select and calibrate the threshold on validation data using operational costs
-   or an alert-budget target.
-7. Evaluate on a later held-out period and compare against the baseline.
-8. Monitor drift, alert volume, missing-data behavior, and threshold stability in
-   production.
-
-Prefer event-level precision, recall, and detection delay when anomalies persist
-across many timestamps. Point-wise accuracy can be misleading because normal
-points usually dominate, and labeling every point in one incident as a separate
-success overstates performance.
+[Start lesson 1 →]({{ '/time-series-anomaly-detection/lessons/01-what-is-an-anomaly/' | relative_url }})
 
 [Back to home]({{ '/' | relative_url }})
