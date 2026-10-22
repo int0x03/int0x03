@@ -1,0 +1,22 @@
+---
+layout: default
+---
+<div class="docs-layout">
+  <aside class="docs-sidebar" aria-label="Documentation navigation">
+    {% include sidebar.html %}
+  </aside>
+
+  <article class="post docs-content">
+    <header class="post-header">
+      <h1 class="post-title">{{ page.title | escape }}</h1>
+    </header>
+
+    <div class="post-content" id="document-content">
+      {{ content }}
+    </div>
+  </article>
+
+  <aside class="docs-toc" aria-label="Table of contents">
+    {% include toc.html %}
+  </aside>
+</div>

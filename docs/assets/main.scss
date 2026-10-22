@@ -1,0 +1,168 @@
+---
+---
+@import "minima";
+
+.page-content > .wrapper {
+  max-width: 1500px;
+}
+
+.docs-layout {
+  display: grid;
+  grid-template-columns: minmax(200px, 250px) minmax(0, 760px) minmax(180px, 220px);
+  gap: 0 36px;
+  justify-content: center;
+  align-items: start;
+}
+
+.docs-content {
+  min-width: 0;
+}
+
+.docs-sidebar,
+.docs-toc {
+  position: sticky;
+  top: 24px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.docs-nav-title,
+.toc-title {
+  margin: 0 0 12px;
+  color: #424242;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.docs-nav-list,
+.docs-nav-sublist,
+.toc-list {
+  margin: 0;
+  list-style: none;
+}
+
+.docs-nav-section + .docs-nav-section {
+  margin-top: 4px;
+}
+
+.docs-nav-sublist {
+  margin: 4px 0 8px 10px;
+  padding-left: 10px;
+  border-left: 1px solid #e8e8e8;
+}
+
+.docs-nav-pages {
+  margin-left: 4px;
+}
+
+.docs-nav-link,
+.toc-link {
+  display: block;
+  border-radius: 4px;
+  color: #555;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.docs-nav-link {
+  padding: 5px 8px;
+  font-size: 0.84rem;
+}
+
+.docs-nav-section-link,
+.docs-nav-group-link {
+  color: #333;
+  font-weight: 600;
+}
+
+.docs-nav-link:hover,
+.toc-link:hover {
+  color: #1756a9;
+  text-decoration: none;
+  background: #f5f7fa;
+}
+
+.docs-nav-link.is-active {
+  color: #1756a9;
+  background: #eaf2fb;
+  font-weight: 600;
+}
+
+.docs-nav-section.is-current-section > .docs-nav-section-link:not(.is-active) {
+  color: #1756a9;
+}
+
+.toc-list {
+  padding-left: 0;
+}
+
+.toc-item {
+  margin-bottom: 2px;
+}
+
+.toc-link {
+  padding: 4px 8px;
+  border-left: 2px solid transparent;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.82rem;
+}
+
+.toc-h3 .toc-link {
+  padding-left: 20px;
+  font-size: 0.78rem;
+}
+
+.toc-link.is-active {
+  border-left-color: #1756a9;
+  color: #1756a9;
+  background: #f5f7fa;
+}
+
+.post-content h2,
+.post-content h3 {
+  scroll-margin-top: 24px;
+}
+
+@media screen and (max-width: 1100px) {
+  .docs-layout {
+    grid-template-columns: minmax(190px, 230px) minmax(0, 760px);
+    gap: 0 30px;
+  }
+
+  .docs-toc {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .page-content > .wrapper {
+    max-width: calc(100% - 30px);
+  }
+
+  .docs-layout {
+    display: block;
+  }
+
+  .docs-sidebar {
+    position: static;
+    max-height: 18rem;
+    margin-bottom: 30px;
+    padding: 14px;
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+  }
+}
+
+@media print {
+  .docs-layout {
+    display: block;
+  }
+
+  .docs-sidebar,
+  .docs-toc {
+    display: none;
+  }
+}

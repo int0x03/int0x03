@@ -1,0 +1,80 @@
+{% assign navigation = site.data.navigation %}
+<nav class="docs-nav" aria-labelledby="docs-nav-title">
+  <h2 class="docs-nav-title" id="docs-nav-title">Documentation</h2>
+  <ul class="docs-nav-list">
+    <li>
+      {% assign home_class = "docs-nav-link" %}
+      {% assign home_current = "false" %}
+      {% if page.url == navigation.home.url %}
+        {% assign home_class = home_class | append: " is-active" %}
+        {% assign home_current = "page" %}
+      {% endif %}
+      <a class="{{ home_class }}"
+         href="{{ navigation.home.url | relative_url }}"
+         aria-current="{{ home_current }}">
+        {{ navigation.home.title | escape }}
+      </a>
+    </li>
+    {% for section in navigation.sections %}
+      {% assign section_item_class = "docs-nav-section" %}
+      {% assign section_link_class = "docs-nav-link docs-nav-section-link" %}
+      {% assign section_current = "false" %}
+      {% if page.url contains section.url %}
+        {% assign section_item_class = section_item_class | append: " is-current-section" %}
+      {% endif %}
+      {% if page.url == section.url %}
+        {% assign section_link_class = section_link_class | append: " is-active" %}
+        {% assign section_current = "page" %}
+      {% endif %}
+      <li class="{{ section_item_class }}">
+        <a class="{{ section_link_class }}"
+           href="{{ section.url | relative_url }}"
+           aria-current="{{ section_current }}">
+          {{ section.title | escape }}
+        </a>
+        {% if section.children %}
+          <ul class="docs-nav-sublist">
+            {% for group in section.children %}
+              <li>
+                {% if group.url %}
+                  {% assign group_class = "docs-nav-link docs-nav-group-link" %}
+                  {% assign group_current = "false" %}
+                  {% if page.url == group.url %}
+                    {% assign group_class = group_class | append: " is-active" %}
+                    {% assign group_current = "page" %}
+                  {% endif %}
+                  <a class="{{ group_class }}"
+                     href="{{ group.url | relative_url }}"
+                     aria-current="{{ group_current }}">
+                    {{ group.title | escape }}
+                  </a>
+                {% else %}
+                  <span class="docs-nav-link docs-nav-group-link">{{ group.title | escape }}</span>
+                {% endif %}
+                {% if group.children %}
+                  <ul class="docs-nav-sublist docs-nav-pages">
+                    {% for item in group.children %}
+                      {% assign item_class = "docs-nav-link" %}
+                      {% assign item_current = "false" %}
+                      {% if page.url == item.url %}
+                        {% assign item_class = item_class | append: " is-active" %}
+                        {% assign item_current = "page" %}
+                      {% endif %}
+                      <li>
+                        <a class="{{ item_class }}"
+                           href="{{ item.url | relative_url }}"
+                           aria-current="{{ item_current }}">
+                          {{ item.title | escape }}
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</nav>
