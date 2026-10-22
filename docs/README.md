@@ -32,7 +32,7 @@ Open <http://localhost:4000/int0x03/>. To check a production build:
 JEKYLL_ENV=production bundle exec jekyll build --source docs --strict_front_matter
 ```
 
-Generated files go in `docs/_site/` and are not committed. Restart the preview
+Generated files go in `_site/` and are not committed. Restart the preview
 server after changing `docs/_config.yml`.
 
 ## Publish on GitHub Pages
@@ -46,6 +46,31 @@ This profile repository is a project site, so `docs/_config.yml` uses
 `baseurl: "/int0x03"`. If you reuse the structure, set `baseurl` to
 `/repository-name` (or `""` for a `username.github.io` repository) and adjust
 `url` to your GitHub Pages origin.
+
+## Write equations
+
+Pages containing equations should set `layout: math-page` in their front matter.
+The layout loads MathJax only where it is needed.
+
+Use kramdown's native math syntax. Keep both delimiters on the same line for an
+inline equation:
+
+```markdown
+The observation $$x_t$$ has a standardized score of $$z_t$$.
+```
+
+Put the delimiters on separate lines for a displayed equation:
+
+```markdown
+$$
+z_t = \frac{x_t - \mu}{\sigma}
+$$
+```
+
+kramdown converts these forms to MathJax-compatible `\(...\)` and `\[...\]`
+HTML. Do not use those backslash delimiters directly in Markdown because
+kramdown treats their backslashes as escapes. Put currency and literal formulas
+that should not render inside backticks.
 
 ## Add notes
 

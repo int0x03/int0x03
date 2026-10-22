@@ -1,6 +1,7 @@
 ---
 title: Time Series Anomaly Detection
 permalink: /time-series-anomaly-detection/
+layout: math-page
 ---
 
 # Time Series Anomaly Detection
@@ -36,24 +37,24 @@ large deviations. They are fast, interpretable, and strong baselines.
 | Method | Basic idea | Notes |
 | --- | --- | --- |
 | Z-score | Flag values several standard deviations from the mean. | Best for roughly stationary, light-tailed data; use rolling or seasonal statistics when the baseline changes. |
-| Modified Z-score / MAD | Compare values with the median using the median absolute deviation. | More robust than mean and standard deviation when the history already contains outliers. |
-| IQR or quantile rules | Flag values outside robust quantile bounds. | Simple and distribution-free, but does not model temporal order by itself. |
-| EWMA / CUSUM / control charts | Accumulate small deviations from a controlled baseline. | Useful for detecting persistent level shifts in monitored processes. |
+| Modified Z-score / Median Absolute Deviation (MAD) | Compare values with the median using the median absolute deviation. | More robust than mean and standard deviation when the history already contains outliers. |
+| Interquartile Range (IQR) or quantile rules | Flag values outside robust quantile bounds. | Simple and distribution-free, but does not model temporal order by itself. |
+| Exponentially Weighted Moving Average (EWMA) / Cumulative Sum (CUSUM) / control charts | Accumulate small deviations from a controlled baseline. | Useful for detecting persistent level shifts in monitored processes. |
 | Seasonal decomposition | Remove trend and seasonality, then score the residual. | Useful when an observation should be compared with the same seasonal context. |
-| Forecast interval | Fit a statistical forecast and flag observations outside its prediction interval. | Examples include exponential smoothing and ARIMA-family models. |
+| Forecast interval | Fit a statistical forecast and flag observations outside its prediction interval. | Examples include exponential smoothing and Autoregressive Integrated Moving Average (ARIMA) models. |
 
-For observations \(x_t\), the ordinary Z-score uses the mean and standard
+For observations $$x_t$$, the ordinary Z-score uses the mean and standard
 deviation:
 
-\[
+$$
 z_t = \frac{x_t - \mu}{\sigma}
-\]
+$$
 
 A common robust alternative uses the median and MAD:
 
-\[
+$$
 \operatorname{MAD} = \operatorname{median}(|x_t - \operatorname{median}(x)|)
-\]
+$$
 
 Thresholds such as `abs(z) > 3` are heuristics, not universal constants. Estimate
 them on representative validation data, and define what to do when variance or
@@ -73,10 +74,10 @@ include:
 | --- | --- |
 | Isolation Forest | Unsupervised scoring of tabular or window features; scales well and makes few distributional assumptions. |
 | Local Outlier Factor (LOF) | Finds samples with unusually low density relative to their neighbors. Use novelty mode when scoring future data. |
-| One-Class SVM | Learns a boundary around mostly normal training examples; can be sensitive to scaling and hyperparameters. |
+| One-Class Support Vector Machine (SVM) | Learns a boundary around mostly normal training examples; can be sensitive to scaling and hyperparameters. |
 | Elliptic Envelope | Fits a robust Gaussian covariance; appropriate only when that shape is a reasonable assumption. |
 | Clustering or nearest-neighbor distance | Treats small clusters or samples far from normal clusters as suspicious. |
-| PCA reconstruction error | Flags windows that cannot be represented well by a low-dimensional normal subspace. |
+| Principal Component Analysis (PCA) reconstruction error | Flags windows that cannot be represented well by a low-dimensional normal subspace. |
 | Supervised classifiers | Predict anomalies directly when enough reliable labels exist. |
 
 scikit-learn is a general machine-learning toolkit, not a time-series anomaly
@@ -90,12 +91,13 @@ often grouped by the mechanism used to produce a score:
 
 | Mechanism | Basic idea | Representative models |
 | --- | --- | --- |
-| Forecasting-based | Predict the next value or window and score the forecast residual or likelihood. | State-space models, RNN/LSTM/TCN, Transformer forecasters. |
+| Forecasting-based | Predict the next value or window and score the forecast residual or likelihood. | State-space models, Recurrent Neural Networks (RNNs), Long Short-Term Memory networks (LSTMs), Temporal Convolutional Networks (TCNs), Transformer forecasters. |
 | Reconstruction-based | Reconstruct a normal input window and score reconstruction error. | PCA, autoencoders, variational autoencoders, sequence autoencoders. |
 | Density or probabilistic | Estimate how likely an observation or sequence is under the learned normal process. | Gaussian processes, hidden Markov/state-space models, normalizing flows. |
 | Representation or graph-based | Learn temporal and cross-variable relationships before scoring unusual states. | Contrastive models, temporal Transformers, graph neural networks. |
 
-[PyPOTS](https://github.com/WenjieDu/PyPOTS) belongs here as a **toolbox**, not as
+[PyPOTS](https://github.com/WenjieDu/PyPOTS) (Python Toolbox for Data Mining on
+Partially-Observed Time Series) belongs here as a **toolbox**, not as
 one anomaly-detection algorithm. It provides a common interface for multiple
 neural time-series models and tasks on partially observed data, including anomaly
 detection and handling missing values. The specific PyPOTS model still needs to
@@ -106,7 +108,7 @@ Deep models are most useful when temporal dependencies, many correlated
 variables, missing observations, or large datasets make simpler assumptions too
 restrictive. They also require more careful tuning, calibration, and monitoring.
 
-### 4. Foundation models and LLM-assisted methods
+### 4. Foundation models and Large Language Model (LLM)-assisted methods
 
 This is an emerging family and should be split into two different ideas:
 
