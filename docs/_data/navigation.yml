@@ -45,6 +45,15 @@ sections:
             url: /time-series-anomaly-detection/zh-cn/lessons/08-production-and-llms/
   - title: LLMs
     url: /llm/
+    children:
+      - title: English
+        children:
+          - title: Neural Network Architectures
+            url: /llm/neural-network-architectures/
+      - title: 中文
+        children:
+          - title: 神经网络架构
+            url: /llm/zh-cn/neural-network-architectures/
   - title: scikit-learn
     url: /sklearn/
   - title: LeetCode

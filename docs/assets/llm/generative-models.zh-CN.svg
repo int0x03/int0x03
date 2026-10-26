@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" role="img" aria-labelledby="title desc">
+  <title id="title">自编码器、生成对抗网络与扩散模型工作流程对比</title>
+  <desc id="desc">三个横向流程分别展示通过瓶颈进行重建、生成器与判别器相互竞争，以及从噪声开始反复去噪并产生样本。</desc>
+  <defs>
+    <style>
+      .panel{fill:#f8fafc;stroke:#dbe3ee;stroke-width:2}.heading{font:700 19px system-ui,sans-serif;fill:#172033}.copy{font:14px system-ui,sans-serif;fill:#475569}.box{fill:#fff;stroke:#2563eb;stroke-width:2}.special{fill:#ede9fe;stroke:#7c3aed;stroke-width:2}.edge{stroke:#64748b;stroke-width:2;fill:none}.feedback{stroke:#dc2626;stroke-width:2;fill:none;stroke-dasharray:6 5}.good{fill:#dcfce7;stroke:#16a34a;stroke-width:2}
+    </style>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L8 3z" fill="#64748b"/></marker>
+    <marker id="red" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L8 3z" fill="#dc2626"/></marker>
+  </defs>
+  <rect class="panel" x="15" y="15" width="970" height="140" rx="16"/><text class="heading" x="40" y="48">自编码器 · 通过重建学习</text>
+  <g transform="translate(65 73)"><rect class="box" width="130" height="48" rx="9"/><text class="copy" x="65" y="30" text-anchor="middle">输入</text><path class="edge" d="M130 24H205" marker-end="url(#arrow)"/><rect class="box" x="215" width="130" height="48" rx="9"/><text class="copy" x="280" y="30" text-anchor="middle">编码器</text><path class="edge" d="M345 24H420" marker-end="url(#arrow)"/><rect class="special" x="430" y="7" width="90" height="34" rx="17"/><text class="copy" x="475" y="29" text-anchor="middle">编码</text><path class="edge" d="M520 24H595" marker-end="url(#arrow)"/><rect class="box" x="605" width="130" height="48" rx="9"/><text class="copy" x="670" y="30" text-anchor="middle">解码器</text><path class="edge" d="M735 24H790" marker-end="url(#arrow)"/><rect class="good" x="800" width="110" height="48" rx="9"/><text class="copy" x="855" y="30" text-anchor="middle">重建</text></g>
+
+  <rect class="panel" x="15" y="180" width="970" height="140" rx="16"/><text class="heading" x="40" y="213">生成对抗网络 · 通过竞争学习</text>
+  <g transform="translate(65 238)"><rect class="box" width="120" height="48" rx="9"/><text class="copy" x="60" y="30" text-anchor="middle">随机种子</text><path class="edge" d="M120 24H190" marker-end="url(#arrow)"/><rect class="special" x="200" width="140" height="48" rx="9"/><text class="copy" x="270" y="30" text-anchor="middle">生成器</text><path class="edge" d="M340 24H410" marker-end="url(#arrow)"/><rect class="box" x="420" width="150" height="48" rx="9"/><text class="copy" x="495" y="30" text-anchor="middle">合成样本</text><path class="edge" d="M570 24H640" marker-end="url(#arrow)"/><rect class="special" x="650" width="150" height="48" rx="9"/><text class="copy" x="725" y="30" text-anchor="middle">判别器</text><path class="feedback" d="M725 48C725 95 270 95 270 50" marker-end="url(#red)"/><text class="copy" x="495" y="91" text-anchor="middle">反馈推动生成器改进</text></g>
+
+  <rect class="panel" x="15" y="345" width="970" height="140" rx="16"/><text class="heading" x="40" y="378">扩散模型 · 学习逆转逐步加入的噪声</text>
+  <g transform="translate(65 403)"><rect class="special" width="125" height="48" rx="9"/><text class="copy" x="62" y="30" text-anchor="middle">随机噪声</text><path class="edge" d="M125 24H200" marker-end="url(#arrow)"/><rect class="box" x="210" width="140" height="48" rx="9"/><text class="copy" x="280" y="30" text-anchor="middle">去噪</text><path class="edge" d="M350 24H425" marker-end="url(#arrow)"/><rect class="box" x="435" width="140" height="48" rx="9"/><text class="copy" x="505" y="30" text-anchor="middle">再次去噪</text><path class="edge" d="M575 24H650" marker-end="url(#arrow)"/><text class="heading" x="618" y="29">…</text><path class="edge" d="M665 24H740" marker-end="url(#arrow)"/><rect class="good" x="750" width="145" height="48" rx="9"/><text class="copy" x="822" y="30" text-anchor="middle">新样本</text></g>
+</svg>
+

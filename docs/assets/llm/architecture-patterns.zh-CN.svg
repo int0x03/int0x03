@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 430" role="img" aria-labelledby="title desc">
+  <title id="title">四种反复出现的神经网络连接模式</title>
+  <desc id="desc">四个面板分别展示稠密前馈连接、局部卷积连接、循环状态，以及选择性注意力或路由。</desc>
+  <defs>
+    <style>
+      .panel{fill:#f8fafc;stroke:#dbe3ee;stroke-width:2}.heading{font:700 19px system-ui,sans-serif;fill:#172033}.copy{font:14px system-ui,sans-serif;fill:#475569}
+      .node{fill:#fff;stroke:#2563eb;stroke-width:3}.select{fill:#ede9fe;stroke:#7c3aed}.edge{stroke:#94a3b8;stroke-width:2}.strong{stroke:#7c3aed;stroke-width:5}.loop{fill:none;stroke:#2563eb;stroke-width:3}
+    </style>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0L0 6L8 3z" fill="#2563eb"/></marker>
+  </defs>
+  <rect class="panel" x="15" y="15" width="470" height="190" rx="16"/><text class="heading" x="40" y="50">稠密连接 · 组合所有输入</text><text class="copy" x="40" y="180">适用于尚无更强结构假设的情况</text>
+  <g class="edge"><path d="M110 85L245 75M110 85L245 125M110 135L245 75M110 135L245 125M245 75L390 105M245 125L390 105"/></g>
+  <g class="node"><circle cx="110" cy="85" r="17"/><circle cx="110" cy="135" r="17"/><circle cx="245" cy="75" r="17"/><circle cx="245" cy="125" r="17"/><circle cx="390" cy="105" r="17"/></g>
+
+  <rect class="panel" x="515" y="15" width="470" height="190" rx="16"/><text class="heading" x="540" y="50">局部连接 · 复用小型检测器</text><text class="copy" x="540" y="180">适用于相邻像素、采样点或特征</text>
+  <g transform="translate(565 72)"><g fill="#fff" stroke="#94a3b8"><rect width="30" height="30"/><rect x="30" width="30" height="30"/><rect x="60" width="30" height="30"/><rect y="30" width="30" height="30"/><rect x="30" y="30" width="30" height="30"/><rect x="60" y="30" width="30" height="30"/><rect y="60" width="30" height="30"/><rect x="30" y="60" width="30" height="30"/><rect x="60" y="60" width="30" height="30"/></g><rect x="28" y="28" width="64" height="64" fill="#dbeafe" fill-opacity=".8" stroke="#2563eb" stroke-width="3"/></g>
+  <path class="loop" d="M680 116H770" marker-end="url(#arrow)"/><g transform="translate(810 83)" fill="#dbeafe" stroke="#2563eb" stroke-width="2"><rect width="24" height="24"/><rect x="24" y="24" width="24" height="24"/><rect x="48" y="48" width="24" height="24"/></g>
+
+  <rect class="panel" x="15" y="225" width="470" height="190" rx="16"/><text class="heading" x="40" y="260">循环连接 · 向后传递状态</text><text class="copy" x="40" y="390">适用于顺序和累积上下文很重要的情况</text>
+  <g class="edge"><path d="M80 330H155M205 330H280M330 330H405"/></g><g class="node"><circle cx="65" cy="330" r="16"/><rect x="155" y="300" width="50" height="60" rx="10"/><circle cx="280" cy="330" r="16"/><rect x="330" y="300" width="50" height="60" rx="10"/><circle cx="405" cy="330" r="16"/></g><path class="loop" d="M180 300C180 270 355 270 355 300" marker-end="url(#arrow)"/><text class="copy" x="55" y="295">x₁</text><text class="copy" x="270" y="295">x₂</text><text class="copy" x="170" y="335">单元</text><text class="copy" x="345" y="335">单元</text>
+
+  <rect class="panel" x="515" y="225" width="470" height="190" rx="16"/><text class="heading" x="540" y="260">选择性连接 · 只路由重要信息</text><text class="copy" x="540" y="390">适用于注意力、图邻居和专家模型</text>
+  <g class="edge"><path d="M590 330L750 285M590 330L750 330M590 330L750 375"/></g><path class="strong" d="M590 330L750 285"/><g class="node"><circle cx="590" cy="330" r="20"/><circle cx="750" cy="330" r="20"/><circle cx="750" cy="375" r="20"/></g><circle class="node select" cx="750" cy="285" r="20"/><text class="copy" x="785" y="291">已选中</text>
+</svg>
+
