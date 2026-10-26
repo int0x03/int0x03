@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 390" role="img" aria-labelledby="title desc">
+  <title id="title">神经网络主要架构里程碑时间线</title>
+  <desc id="desc">从 1958 年的感知机开始，依次展示卷积、循环、自编码器、混合专家、孪生网络、图网络、对抗网络、扩散模型和 Transformer，直至 2020 年的重要里程碑。</desc>
+  <defs>
+    <style>
+      .axis{stroke:#64748b;stroke-width:4}.stem{stroke:#94a3b8;stroke-width:2}
+      .dot{fill:#2563eb;stroke:#fff;stroke-width:3}.late{fill:#7c3aed}.label{font:600 18px system-ui,sans-serif;fill:#172033}
+      .date{font:700 16px system-ui,sans-serif;fill:#2563eb}.note{font:14px system-ui,sans-serif;fill:#475569}
+      .era{font:600 15px system-ui,sans-serif;fill:#64748b}.panel{fill:#f8fafc;stroke:#dbe3ee;stroke-width:2}
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#64748b"/></marker>
+  </defs>
+  <rect class="panel" x="10" y="10" width="1080" height="370" rx="18"/>
+  <text class="label" x="40" y="45">架构里程碑</text>
+  <text class="note" x="40" y="70">日期代表有影响力的论文；每一种思想都经历了多年的演变。</text>
+  <line class="axis" x1="65" y1="220" x2="1040" y2="220" marker-end="url(#arrow)"/>
+
+  <g transform="translate(95)"><line class="stem" y1="220" y2="125"/><circle class="dot" cy="220" r="9"/><text class="date" text-anchor="middle" y="110">1958</text><text class="label" text-anchor="middle" y="88">感知机</text><text class="note" text-anchor="middle" y="246">学习决策边界</text></g>
+  <g transform="translate(245)"><line class="stem" y1="220" y2="285"/><circle class="dot" cy="220" r="9"/><text class="date" text-anchor="middle" y="310">1980 年代</text><text class="label" text-anchor="middle" y="335">卷积 · 循环</text><text class="note" text-anchor="middle" y="357">空间、顺序与表示</text></g>
+  <g transform="translate(390)"><line class="stem" y1="220" y2="125"/><circle class="dot" cy="220" r="9"/><text class="date" text-anchor="middle" y="110">1991—1997</text><text class="label" text-anchor="middle" y="88">专家 · 相似度 · 记忆</text><text class="note" text-anchor="middle" y="246">分工、比较与记忆</text></g>
+  <g transform="translate(540)"><line class="stem" y1="220" y2="285"/><circle class="dot" cy="220" r="9"/><text class="date" text-anchor="middle" y="310">2005—2009</text><text class="label" text-anchor="middle" y="335">图网络</text><text class="note" text-anchor="middle" y="357">沿图的连接传播</text></g>
+  <g transform="translate(690)"><line class="stem" y1="220" y2="125"/><circle class="dot late" cy="220" r="9"/><text class="date" text-anchor="middle" y="110">2013—2015</text><text class="label" text-anchor="middle" y="88">新型生成模型</text><text class="note" text-anchor="middle" y="246">采样、对抗与去噪</text></g>
+  <g transform="translate(845)"><line class="stem" y1="220" y2="285"/><circle class="dot late" cy="220" r="9"/><text class="date" text-anchor="middle" y="310">2017</text><text class="label" text-anchor="middle" y="335">Transformer</text><text class="note" text-anchor="middle" y="357">直接关注相关信息</text></g>
+  <g transform="translate(990)"><line class="stem" y1="220" y2="125"/><circle class="dot late" cy="220" r="9"/><text class="date" text-anchor="middle" y="110">2020</text><text class="label" text-anchor="middle" y="88">视觉 · 扩散</text><text class="note" text-anchor="middle" y="246">现代视觉与生成</text></g>
+
+  <text class="era" x="65" y="195">连接模式</text>
+  <text class="era" x="735" y="195">基础模型时代</text>
+</svg>
+

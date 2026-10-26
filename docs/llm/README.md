@@ -7,6 +7,12 @@ permalink: /llm/
 
 Notes on building and evaluating applications powered by language models.
 
+## Guides
+
+- [Neural Network Architectures: From Perceptrons to Transformers]({{ '/llm/neural-network-architectures/' | relative_url }})
+  ([简体中文]({{ '/llm/zh-cn/neural-network-architectures/' | relative_url }})) — a visual,
+  chronological guide to the problems that shaped common neural network families.
+
 ## Topics to explore
 
 - Prompt design, few-shot examples, and structured outputs.

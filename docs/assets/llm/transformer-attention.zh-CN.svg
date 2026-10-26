@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" role="img" aria-labelledby="title desc">
+  <title id="title">自注意力在相关词元之间传递信息</title>
+  <desc id="desc">在“这只动物没有穿过马路，因为它累了”这句话中，词语“它”强烈关注“动物”，而对“马路”的关注较弱，展示了依赖上下文的关系。</desc>
+  <defs>
+    <style>
+      .panel{fill:#f8fafc;stroke:#dbe3ee;stroke-width:2}.heading{font:700 20px system-ui,sans-serif;fill:#172033}.copy{font:15px system-ui,sans-serif;fill:#475569}.token{fill:#fff;stroke:#94a3b8;stroke-width:2}.focus{fill:#ede9fe;stroke:#7c3aed;stroke-width:3}.target{fill:#dbeafe;stroke:#2563eb;stroke-width:3}.strong{fill:none;stroke:#2563eb;stroke-width:7;opacity:.85}.weak{fill:none;stroke:#94a3b8;stroke-width:2;opacity:.7}.step{fill:#fff;stroke:#2563eb;stroke-width:2}
+    </style>
+    <marker id="blue" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L8 3z" fill="#2563eb"/></marker>
+    <marker id="gray" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L8 3z" fill="#94a3b8"/></marker>
+  </defs>
+  <rect class="panel" x="15" y="15" width="970" height="410" rx="18"/>
+  <text class="heading" x="45" y="55">自注意力会建立依赖上下文的信息路径</text>
+  <text class="copy" x="45" y="82">在表示“它”时，模型可以从“动物”获取比“马路”更多的信息。</text>
+
+  <path class="strong" d="M725 210C660 110 245 110 200 210" marker-end="url(#blue)"/>
+  <path class="weak" d="M725 210C685 160 590 160 550 210" marker-end="url(#gray)"/>
+  <text class="copy" x="455" y="126" text-anchor="middle">强注意力</text>
+  <text class="copy" x="640" y="170" text-anchor="middle">弱注意力</text>
+
+  <g transform="translate(70 210)"><rect class="token" width="80" height="52" rx="9"/><text class="copy" x="40" y="32" text-anchor="middle">这只</text></g>
+  <g transform="translate(160 210)"><rect class="target" width="90" height="52" rx="9"/><text class="copy" x="45" y="32" text-anchor="middle">动物</text></g>
+  <g transform="translate(260 210)"><rect class="token" width="80" height="52" rx="9"/><text class="copy" x="40" y="32" text-anchor="middle">没有</text></g>
+  <g transform="translate(350 210)"><rect class="token" width="80" height="52" rx="9"/><text class="copy" x="40" y="32" text-anchor="middle">穿过</text></g>
+  <g transform="translate(440 210)"><rect class="token" width="90" height="52" rx="9"/><text class="copy" x="45" y="32" text-anchor="middle">马路</text></g>
+  <g transform="translate(540 210)"><rect class="token" width="90" height="52" rx="9"/><text class="copy" x="45" y="32" text-anchor="middle">因为</text></g>
+  <g transform="translate(640 210)"><rect class="focus" width="70" height="52" rx="9"/><text class="copy" x="35" y="32" text-anchor="middle">它</text></g>
+  <g transform="translate(720 210)"><rect class="token" width="85" height="52" rx="9"/><text class="copy" x="42" y="32" text-anchor="middle">累了</text></g>
+
+  <g transform="translate(170 320)"><rect class="step" width="180" height="55" rx="12"/><text class="copy" x="90" y="33" text-anchor="middle">比较词元</text><path d="M180 27H265" stroke="#64748b" stroke-width="2" marker-end="url(#gray)"/><rect class="step" x="275" width="180" height="55" rx="12"/><text class="copy" x="365" y="33" text-anchor="middle">计算相关权重</text><path d="M455 27H540" stroke="#64748b" stroke-width="2" marker-end="url(#gray)"/><rect class="step" x="550" width="180" height="55" rx="12"/><text class="copy" x="640" y="33" text-anchor="middle">混合信息</text></g>
+</svg>
+
+

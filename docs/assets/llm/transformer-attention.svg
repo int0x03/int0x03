@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" role="img" aria-labelledby="title desc">
+  <title id="title">Self-attention routes information between relevant tokens</title>
+  <desc id="desc">In the sentence The animal did not cross the street because it was tired, attention from the word it points strongly to animal and weakly to street, illustrating context-dependent relationships.</desc>
+  <defs>
+    <style>
+      .panel{fill:#f8fafc;stroke:#dbe3ee;stroke-width:2}.heading{font:700 20px system-ui,sans-serif;fill:#172033}.copy{font:15px system-ui,sans-serif;fill:#475569}.token{fill:#fff;stroke:#94a3b8;stroke-width:2}.focus{fill:#ede9fe;stroke:#7c3aed;stroke-width:3}.target{fill:#dbeafe;stroke:#2563eb;stroke-width:3}.strong{fill:none;stroke:#2563eb;stroke-width:7;opacity:.85}.weak{fill:none;stroke:#94a3b8;stroke-width:2;opacity:.7}.step{fill:#fff;stroke:#2563eb;stroke-width:2}
+    </style>
+    <marker id="blue" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L8 3z" fill="#2563eb"/></marker>
+    <marker id="gray" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0 0L0 6L8 3z" fill="#94a3b8"/></marker>
+  </defs>
+  <rect class="panel" x="15" y="15" width="970" height="410" rx="18"/>
+  <text class="heading" x="45" y="55">Self-attention builds a context-specific route</text>
+  <text class="copy" x="45" y="82">When representing “it,” the model can gather more information from “animal” than from “street.”</text>
+
+  <path class="strong" d="M660 210C610 110 250 110 200 210" marker-end="url(#blue)"/>
+  <path class="weak" d="M660 210C645 160 560 160 540 210" marker-end="url(#gray)"/>
+  <text class="copy" x="425" y="126" text-anchor="middle">strong attention</text>
+  <text class="copy" x="600" y="170" text-anchor="middle">weak attention</text>
+
+  <g transform="translate(60 210)"><rect class="token" width="80" height="52" rx="9"/><text class="copy" x="40" y="32" text-anchor="middle">The</text></g>
+  <g transform="translate(155 210)"><rect class="target" width="90" height="52" rx="9"/><text class="copy" x="45" y="32" text-anchor="middle">animal</text></g>
+  <g transform="translate(260 210)"><rect class="token" width="70" height="52" rx="9"/><text class="copy" x="35" y="32" text-anchor="middle">did</text></g>
+  <g transform="translate(345 210)"><rect class="token" width="70" height="52" rx="9"/><text class="copy" x="35" y="32" text-anchor="middle">not</text></g>
+  <g transform="translate(430 210)"><rect class="token" width="90" height="52" rx="9"/><text class="copy" x="45" y="32" text-anchor="middle">cross</text></g>
+  <g transform="translate(535 210)"><rect class="token" width="95" height="52" rx="9"/><text class="copy" x="47" y="32" text-anchor="middle">street</text></g>
+  <g transform="translate(645 210)"><rect class="focus" width="65" height="52" rx="9"/><text class="copy" x="32" y="32" text-anchor="middle">it</text></g>
+  <g transform="translate(725 210)"><rect class="token" width="85" height="52" rx="9"/><text class="copy" x="42" y="32" text-anchor="middle">was</text></g>
+  <g transform="translate(825 210)"><rect class="token" width="100" height="52" rx="9"/><text class="copy" x="50" y="32" text-anchor="middle">tired</text></g>
+
+  <g transform="translate(170 320)"><rect class="step" width="180" height="55" rx="12"/><text class="copy" x="90" y="33" text-anchor="middle">compare tokens</text><path d="M180 27H265" stroke="#64748b" stroke-width="2" marker-end="url(#gray)"/><rect class="step" x="275" width="180" height="55" rx="12"/><text class="copy" x="365" y="33" text-anchor="middle">weight relevance</text><path d="M455 27H540" stroke="#64748b" stroke-width="2" marker-end="url(#gray)"/><rect class="step" x="550" width="180" height="55" rx="12"/><text class="copy" x="640" y="33" text-anchor="middle">mix information</text></g>
+</svg>
+
