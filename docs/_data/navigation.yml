@@ -54,6 +54,19 @@ sections:
         children:
           - title: 神经网络架构
             url: /llm/zh-cn/neural-network-architectures/
+  - title: Reflections
+    url: /reflections/
+    children:
+      - title: English
+        children:
+          - title: SRE Resume
+            url: /reflections/resume/
+      - title: 中文
+        children:
+          - title: 自动化问题诊断框架
+            url: /reflections/zh-cn/automated-troubleshooting-framework/
+          - title: SRE 简历
+            url: /reflections/zh-cn/resume/
   - title: scikit-learn
     url: /sklearn/
   - title: LeetCode

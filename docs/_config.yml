@@ -10,6 +10,7 @@ kramdown:
 header_pages:
   - time-series-anomaly-detection/README.md
   - llm/README.md
+  - reflections/README.md
   - sklearn/README.md
   - leetcode/README.md
 
